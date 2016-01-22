@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exemplo</title>
+    <meta charset="utf-8" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Exemplo</h1>
+        <hr>
+        <div class="row">
+            <form action="" class="col-sm-6">
+                <div class="col-sm-8">                    
+                    <div class="form-group" id="Nome">
+                        <label for="">Nome</label>                      
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group" id="Sexo">
+                      <label for="">Sexo</label>
+                    </div>
+                </div>
+                 <div class="col-sm-8">
+                    <div class="form-group" id="Link">         
+                    </div>
+                </div>
+ 
+                <div id=teste>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <input type="button" id="Enviar" class="btn btn-success" value="Salvar" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="js/singleObject.js"></script>
+    <script>
+        // Pega os elemtos no Html
+        var inputNome = document.getElementById("Nome");
+        
+        var sexoSelect = document.getElementById("Sexo");
+        
+        var link =document.getElementById("Link");
+        
+        // Cria os Objetos no Html
+        
+        var nome = sObject.createTag({id :"NomeInput",name:"NomeInput",tag:"input",value:"Otavio" ,class:"form-control"});
+        
+        var sexo = sObject.createTag({id:"sexoSelect",tag:"Select",class:"form-control"});
+        
+        sexo.appendChild(sObject.createTag({id:"M",text:"Selecione",tag:"option"}));
+        
+        sexo.appendChild(sObject.createTag({id:"M",text:"Masculino",tag:"option"}));
+        
+        var linkA = sObject.createTag({text:"LinkA",id:"LinkA",tag:"a",href:"#",name:"LinkA"});
+        
+        
+        //Inseri no Html
+        inputNome.appendChild(nome);
+        
+        sexoSelect.appendChild(sexo);
+        
+        link.appendChild(linkA);                        
+        
+    </script>
+</body>
+
+</html>
