@@ -1,4 +1,4 @@
-var sObject = (function () {
+var sTag = (function () {
     var tag = {},
         nameProperty = "",
         tagOptions = ['id', 'name', 'class', 'value', 'text', 'type', 'href'];
@@ -7,7 +7,7 @@ var sObject = (function () {
         len = 0;
 
     return {
-        createTag: createTag,
+        create: createTag,
         createFrag:createFrag        
     };
 
