@@ -1,13 +1,13 @@
-# Single Object - Fase Beta
+# Single Object - Versão Beta
 
-Um maneira simples de criar elementos Html , através de Objetos Javascript.
+Uma maneira simples de criar elementos Html , através de Objetos Javascript.
 
 ##Pra quem foi feito.
 
 Este plugin foi criado para trabalhar em conjunto com futuros estudos e plugins que irão ser criados.
 Se você tabalha com objetos e quer criar elementos html apartir de objetos este pode ser um ponto de partida.
 
-**OBS**:É necessário ter conhecimento basico quanto as tags do Html, porém nem todas foram utilizadas.
+**OBS**:É necessário ter conhecimento basico quanto as tags do Html,não foi implementado validação quanto aos tipos de elementos.
 
 ##Como implementar
 
