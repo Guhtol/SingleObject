@@ -11,25 +11,26 @@ Se você tabalha com objetos e quer criar elementos html apartir de objetos este
 
 ##Como implementar
 
-Para implementar basta baixar o arquivo js, copiar para seu projeto e referênciar em seu projeto.
+Para implementar basta baixar o arquivo js, copiar para seu projeto e referênciar na pagina de uso.
 
 ##Exemplos
 
 Para utilizar é bem simples basta chamar a função  create do objeto sTag.
 
-**Importante lembrar que a propriedade tag deve existir em seu objeto,pois é responsável pela criação do tipo do elemento.**
+**Importante lembrar que a propriedade tag deve existir em seu objeto, pois é responsável pela criação do tipo do elemento.**
 ```
 var seuObjeto ={id:"input",name:"input",tag:"input"}
 
 var input = sTag.create(seuObjeto);
 
-//out put <input id="input" name="input"/>
+// <input id="input" name="input"/>
 ```
 
 Caso queria criar um document fragmento .
 ```
 var fragmento = sTag.createFrag();
 
+// document.fragment
 ```
 >Propriedades suportadas. 
 
@@ -42,6 +43,5 @@ var fragmento = sTag.createFrag();
 7. href
 
 **A propriedade tag é necessária é ela quem determina o tipo do elemento html.**
-
 
 
