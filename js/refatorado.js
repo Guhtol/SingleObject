@@ -16,18 +16,19 @@
             if (element === null) {
                 throw new Error('tag name not valid')
             }
-            var result = getNamesProperty(obj)
-                .reduce(createElement, { element: element, obj: obj })
 
-            return result.element
+            var reduceEl = reduce(configElement)
+            var createEl = reduceEl({ element: element, obj: obj })
+
+            return createEl(getNamesProperty(obj)).element
         }
     }
     function setAttributes(element) {
         return function (obj) {
-            return getNamesProperty(obj)
-                .reduce(function (acc, nameProperty) {
-                    acc.setAttributes(nameProperty, obj[nameProperty])
-                }, element)
+            var reduceEl = reduce(createAttribute)
+            var createEl = reduceEl({ element: element, obj: obj })
+
+            return createEl(getNamesProperty(obj)).element
         }
     }
 
@@ -35,7 +36,7 @@
         return Object.keys(obj)
     }
 
-    function createElement(acc, item) {
+    function configElement(acc, item) {
         switch (item) {
             case "class":
                 acc.element['className'] = acc.obj[item]
@@ -47,5 +48,17 @@
         }
     }
 
+    function createAttribute(acc, item) {
+        acc.element.setAttribute(item, acc.obj[item])
+        return acc
+    }
+
+    function reduce(fn) {
+        return function (param) {
+            return function (array) {
+                return array.reduce(fn, param)
+            }
+        }
+    }
 
 })(this)
