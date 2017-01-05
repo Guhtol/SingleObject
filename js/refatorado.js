@@ -2,7 +2,7 @@
 
     const createFrag = () => document.createDocumentFragment()
 
-    const makeReduce = fn => param => array => array.reduce(fn, param)
+    const makeReduce = (fn, param) => array => array.reduce(fn, param)
 
     const makeSimpleCompose = (firstFn, secondFn) => obj => firstFn(secondFn(obj))
 
@@ -18,6 +18,9 @@
             case "class":
                 acc.element['className'] = acc.obj[item]
                 return acc
+            case "text":
+                acc.element['textContent'] = acc.obj[item]
+                return acc
             default:
                 if (item in acc.element)
                     acc.element[item] = acc.obj[item]
@@ -31,16 +34,14 @@
         if (element === null)
             throw new Error('tag name not valid')
 
-        const mkReduce = makeReduce(configElement)
-        const createEl = mkReduce({ element, obj })
+        const createEl = makeReduce(configElement, { element, obj })
         const compose = makeSimpleCompose(createEl, getNameProperty)
 
         return compose(obj).element
     }
 
     const makeSetAttribute = element => obj => {
-        const mkReduce = makeReduce(createAttribute)
-        const createEl = mkReduce({ element, obj })
+        const createEl = makeReduce(createAttribute, { element, obj })
         const compose = makeSimpleCompose(createEl, getNameProperty)
 
         return compose(obj).element
