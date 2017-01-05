@@ -4,6 +4,8 @@
 
     const makeReduce = fn => param => array => array.reduce(fn, param)
 
+    const makeSimpleCompose = (firstFn, secondFn) => obj => firstFn(secondFn(obj))
+
     const getNameProperty = obj => Object.keys(obj)
 
     const createAttribute = (acc, item) => {
@@ -31,15 +33,17 @@
 
         const mkReduce = makeReduce(configElement)
         const createEl = mkReduce({ element, obj })
+        const compose = makeSimpleCompose(createEl, getNameProperty)
 
-        return createEl(getNameProperty(obj)).element
+        return compose(obj).element
     }
 
     const makeSetAttribute = element => obj => {
         const mkReduce = makeReduce(createAttribute)
         const createEl = mkReduce({ element, obj })
+        const compose = makeSimpleCompose(createEl, getNameProperty)
 
-        return createEl(getNameProperty(obj)).element
+        return compose(obj).element
     }
 
     root.sgObject = {
