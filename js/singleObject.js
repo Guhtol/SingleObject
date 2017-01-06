@@ -1,70 +1,56 @@
-var sTag = (function () {
-    var tag = {},
-        nameProperty = "",
-        tagOptions = ['id', 'name', 'class', 'value', 'text', 'type', 'href'];
+(function (root) {
 
-    var i = 0,
-        len = 0;
+    const createFrag = () => document.createDocumentFragment()
 
-    return {
-        create: createTag,
-        createFrag:createFrag        
-    };
+    const makeReduce = (fn, param) => array => array.reduce(fn, param)
 
-    function createTag(obj) {
-        
-        if (typeof obj !== "object" || obj["tag"] === undefined) {
-            throw new Error('Not object or missing property tag');
-        };
+    const makeSimpleCompose = (firstFn, secondFn) => obj => firstFn(secondFn(obj))
 
-        tag = document.createElement(obj.tag);
+    const getNameProperty = obj => Object.keys(obj)
 
-        resetWhile(tagOptions);
+    const createAttribute = (acc, item) => {
+        acc.element.setAttribute(item, acc.obj[item])
+        return acc
+    }
 
-        while (i < len) {
-            
-            nameProperty = tagOptions[i];
-
-            if (typeof obj[nameProperty] !== "undefined") {
-
-                setTagElement(tag, obj, nameProperty);
-            };
-
-            i++;
-        }
-        return tag;
-
-    };
-    
-    function createFrag(){
-        
-        return document.createDocumentFragment();    
-    };
-        
-    function setTagElement(tag, obj, nameProperty) {
-        
-        switch (nameProperty) {
-            case "name":
-            
-                tag.setAttribute(nameProperty, obj[nameProperty]);
-                
-                break;
+    const configElement = (acc, item) => {
+        switch (item) {
             case "class":
-            
-                tag['className'] = obj[nameProperty];
-                
-                break;
+                acc.element['className'] = acc.obj[item]
+                return acc
+            case "text":
+                acc.element['textContent'] = acc.obj[item]
+                return acc
             default:
-            
-                tag[nameProperty] = obj[nameProperty];
-                
-                break;
+                if (item in acc.element)
+                    acc.element[item] = acc.obj[item]
+                return acc
         }
-    };
-    function resetWhile(obj) {
+    }
 
-        len = obj.length;
+    const makeElement = tagName => obj => {
+        const element = document.createElement(tagName)
 
-        i = 0;
-    };
-})();
+        if (element === null)
+            throw new Error('tag name not valid')
+
+        const createEl = makeReduce(configElement, { element, obj })
+        const compose = makeSimpleCompose(createEl, getNameProperty)
+
+        return compose(obj).element
+    }
+
+    const makeSetAttribute = element => obj => {
+        const createEl = makeReduce(createAttribute, { element, obj })
+        const compose = makeSimpleCompose(createEl, getNameProperty)
+
+        return compose(obj).element
+    }
+
+    root.sgObject = {
+        create: makeElement,
+        setAtt: makeSetAttribute
+    }
+
+
+})(this)
